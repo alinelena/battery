@@ -5,27 +5,24 @@
 #include <QString>
 class ContextProperty;
 
-class BatteryInfo : public QObject {
-    Q_OBJECT
-
-public:
-    BatteryInfo(QObject *parent = NULL);
-    virtual ~BatteryInfo();
-    enum State {                                                                                                                                 
-       Charging =0 ,
-       Discharging,
-       Full,
-       Unknown
+class BatteryInfo:public QObject {
+  Q_OBJECT public:
+    BatteryInfo(QObject * parent = NULL);
+    virtual ~ BatteryInfo();
+    enum State {
+	    Charging = 0,
+	    Discharging,
+	    Full,
+	    Unknown
     };
     int level;
     State state;
 
-private slots:
-    void onPropertyChanged();
+    private slots: void onPropertyChanged();
 
-private:
+  private:
     int getLevel() const;
-    State  getState() const;
+    State getState() const;
 
     ContextProperty *batteryLevel;
     ContextProperty *batteryState;
