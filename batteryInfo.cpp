@@ -22,6 +22,8 @@ BatteryInfo::BatteryInfo(QObject * parent):
 
 BatteryInfo::~BatteryInfo()
 {
+  batteryState->unsubscribe();
+  batteryLevel->unsubscribe();
   delete batteryLevel;
   delete batteryState;
 }
