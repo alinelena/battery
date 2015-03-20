@@ -11,16 +11,14 @@ class BatteryInfo : public QObject {
 public:
     BatteryInfo(QObject *parent = NULL);
     virtual ~BatteryInfo();
-  enum State {                                                                                                                                 
-     Charging =0 ,
-     Discharging,
-     Full,
-     Unknown
-  };
+    enum State {                                                                                                                                 
+       Charging =0 ,
+       Discharging,
+       Full,
+       Unknown
+    };
     int level;
     State state;
-public slots:
-    void init();
 
 private slots:
     void onPropertyChanged();

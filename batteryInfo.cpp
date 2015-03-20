@@ -4,12 +4,6 @@
 #include <contextproperty.h>
 
 
-static inline QString propertyString(ContextProperty *p)
-{
-   QString res(p->value().toString().trimmed());
-   return res;
-}
-
 BatteryInfo::BatteryInfo(QObject *parent) :
     QObject(parent),
     level(-1),
@@ -17,9 +11,8 @@ BatteryInfo::BatteryInfo(QObject *parent) :
     batteryLevel(new ContextProperty("Battery.ChargePercentage", this)),
     batteryState(new ContextProperty("Battery.State", this))
 {
-    batteryLevel->subscribe();
-    batteryState->subscribe();
     batteryLevel->waitForSubscription(true);
+    batteryState->waitForSubscription(true);
     level=getLevel();
     state=getState();
     connect(batteryLevel, SIGNAL(valueChanged()), this, SLOT(onPropertyChanged()));
@@ -28,15 +21,8 @@ BatteryInfo::BatteryInfo(QObject *parent) :
 
 BatteryInfo::~BatteryInfo()
 {
-  batteryLevel->unsubscribe();
-  batteryState->unsubscribe();
   delete batteryLevel;
   delete batteryState;
-}
-
-void BatteryInfo::init()
-{
-    onPropertyChanged();
 }
 
 void BatteryInfo::onPropertyChanged()
