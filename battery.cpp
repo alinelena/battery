@@ -7,6 +7,7 @@ using namespace std;
 int main(int argc,char **argv){
  QApplication app (argc, argv);
  BatteryInfo battery; 
+ battery.init();
  qDebug() << "level: " <<battery.level;
  qDebug() << "state: "<<battery.state;
  return app.exec();

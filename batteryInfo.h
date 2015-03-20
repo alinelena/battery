@@ -20,7 +20,7 @@ public:
     int level;
     State state;
 public slots:
-    void initBattery();
+    void init();
 
 private slots:
     void onPropertyChanged();

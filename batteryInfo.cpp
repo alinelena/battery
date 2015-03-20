@@ -12,11 +12,14 @@ static inline QString propertyString(ContextProperty *p)
 
 BatteryInfo::BatteryInfo(QObject *parent) :
     QObject(parent),
+    level(-1),
+    state(Unknown),
     batteryLevel(new ContextProperty("Battery.ChargePercentage", this)),
     batteryState(new ContextProperty("Battery.State", this))
 {
     batteryLevel->subscribe();
     batteryState->subscribe();
+    batteryLevel->waitForSubscription(true);
     level=getLevel();
     state=getState();
     connect(batteryLevel, SIGNAL(valueChanged()), this, SLOT(onPropertyChanged()));
@@ -31,14 +34,13 @@ BatteryInfo::~BatteryInfo()
   delete batteryState;
 }
 
-void BatteryInfo::initBattery()
+void BatteryInfo::init()
 {
     onPropertyChanged();
 }
 
 void BatteryInfo::onPropertyChanged()
 {
-  qDebug()<<"something happened";
   level=getLevel();
   state=getState();
   qDebug()<<"level: "<<level<<" state: "<<state;
